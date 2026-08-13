@@ -1,6 +1,14 @@
-export default function BookCard({ cover, title, year, author }) {
+export default function BookCard({ cover, title, year, author, onSelect }) {
   return (
-    <div className="w-[167px] flex flex-col gap-2.5">
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={onSelect}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') onSelect && onSelect();
+      }}
+      className="w-[167px] flex flex-col gap-2.5 cursor-pointer"
+    >
       <div className="w-[167px] h-[234px] border border-black shadow-[3px_4px_6px_0_rgba(0,0,0,0.25)] overflow-hidden">
         <img
           src={cover}

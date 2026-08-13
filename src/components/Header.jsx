@@ -1,11 +1,13 @@
-import umbrellaIcon from "../assets/umbrellaWhite.svg";// 
+import umbrella from "/umbrellaWhite.svg";
+import wordmark from "../assets/wordmarkWhite.svg";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 bg-black text-[#fffffc] flex items-center justify-between px-3 py-3">
-      <div className="flex items-center gap-5">
-        <img src={umbrellaIcon} alt="Umbrella Icon" className="h-7 w-auto" />
-      </div>
+    <header className="sticky top-0 bg-black text-[#fffffc] flex items-center justify-between px-10 py-3">
+      <a href="/" className="flex items-center gap-3">
+        <img src={umbrella} alt="Umbrella Icon" className="h-7 w-auto" />
+        <img src={wordmark} alt="The Umbrella Library Wordmark" className="h-3 w-auto" />
+      </a>
 
       <nav className="flex items-center gap-[45px]">
         <a href="#" className="italic text-[20px] hover:opacity-80">
@@ -23,7 +25,7 @@ export default function Header() {
       </nav>
 
       {/* Hamburger */}
-      <button aria-label="Menu" className="flex flex-col gap-1.25 w-[25px]">
+      <button aria-label="Menu" className="flex flex-col gap-[5px] w-[25px]">
         <span className="h-[2px] w-full bg-[#fffffc]" />
         <span className="h-[2px] w-full bg-[#fffffc]" />
         <span className="h-[2px] w-full bg-[#fffffc]" />
