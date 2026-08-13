@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import SearchBar from '../components/SearchBar'
-import umbrellaIcon from "../assets/umbrellaWhite.svg";
+import umbrellaIcon from "/umbrellaWhite.svg";
 import wordmark from "../assets/wordmark.svg";
 
 export default function Home() {
