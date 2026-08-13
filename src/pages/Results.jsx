@@ -70,7 +70,11 @@ export default function Results() {
         <div className="mt-6">
           <div className="text-2xl mb-6">Showing results for “{q}”</div>
 
-          {loading && <div className="py-8 text-center">Loading...</div>}
+          {loading && (
+            <div className="py-20 flex items-center justify-center">
+              <img src="/umbrellaWhite.svg" alt="loading" className="w-30 h-30 animate-pulse" />
+            </div>
+          )}
           {error && <div className="py-8 text-center text-red-600">{error}</div>}
           {!loading && !error && books.length === 0 && <div className="py-8">No books found.</div>}
 
