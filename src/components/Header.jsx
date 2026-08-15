@@ -1,5 +1,5 @@
-import umbrella from "/umbrellaWhite.svg";
-import wordmark from "../assets/wordmarkWhite.svg";
+import umbrella from "/favicon.svg";
+import wordmark from "../assets/wordmark_white.svg";
 
 export default function Header() {
   return (

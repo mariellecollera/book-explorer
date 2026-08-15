@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import SearchBar from '../components/SearchBar'
-import umbrellaIcon from "/umbrellaWhite.svg";
+import umbrella from "/favicon.svg";
 import wordmark from "../assets/wordmark.svg";
 
 export default function Home() {
@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <>
       <section className="flex flex-col items-center max-w-[1200px] mx-auto px-5 py-10">
-        <img src={umbrellaIcon} alt="The Umbrella Library Icon" className="h-14 w-auto mx-auto mb-5" />
+        <img src={umbrella} alt="The Umbrella Library Icon" className="h-14 w-auto mx-auto mb-5" />
         <img src={wordmark} alt="The Umbrella Library Wordmark" className="h-14 w-auto mx-auto mb-5" />
         <p className="text-black italic text-[20px] mb-5">All your books under one umbrella.</p>
 

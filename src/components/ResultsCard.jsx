@@ -8,7 +8,7 @@ export default function ResultsCard({ cover, title, year, author, onSelect }) {
       <div className="w-full h-[320px] border border-black shadow-[3px_4px_6px_0_rgba(0,0,0,0.25)] overflow-hidden mb-4 relative">
         {!loaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-            <img src="/umbrellaWhite.svg" alt="loading" className="w-16 h-16 text-gray-400 animate-pulse" style={{ animationDuration: '1400ms' }} />
+            <img src="/favicon.svg" alt="loading" className="w-16 h-16 text-gray-400 animate-pulse" style={{ animationDuration: '1400ms' }} />
           </div>
         )}
         <img

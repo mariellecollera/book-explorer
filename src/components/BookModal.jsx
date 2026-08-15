@@ -116,7 +116,7 @@ function CoverWithPlaceholder({ src, alt }) {
     <div className="w-full h-full overflow-hidden">
       {!loaded && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-          <img src="/umbrellaWhite.svg" alt="loading" className="w-20 h-20 animate-spin" style={{ animationDuration: '1400ms' }} />
+          <img src="/favicon.svg" alt="loading" className="w-20 h-20 animate-spin" style={{ animationDuration: '1400ms' }} />
         </div>
       )}
       <img

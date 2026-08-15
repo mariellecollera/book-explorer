@@ -3,7 +3,8 @@ import { useSearchParams, useNavigate } from 'react-router-dom'
 import SearchBar from '../components/SearchBar'
 import ResultsCard from '../components/ResultsCard'
 import BookModal from '../components/BookModal'
-import umbrellaIcon from "/umbrellaWhite.svg";
+import umbrella from "/favicon.svg";
+import empty from "../assets/no_books.svg";
 
 export default function Results() {
   const [searchParams] = useSearchParams()
@@ -38,7 +39,7 @@ export default function Results() {
           title: d.title,
           author: (d.author_name && d.author_name[0]) || 'Unknown',
           year: d.first_publish_year,
-          cover: d.cover_i ? `https://covers.openlibrary.org/b/id/${d.cover_i}-M.jpg` : umbrellaIcon,
+          cover: d.cover_i ? `https://covers.openlibrary.org/b/id/${d.cover_i}-M.jpg` : umbrella,
           subjects: d.subject || [],
           edition_count: d.edition_count,
           raw: d,
@@ -72,11 +73,13 @@ export default function Results() {
 
           {loading && (
             <div className="py-20 flex items-center justify-center">
-              <img src="/umbrellaWhite.svg" alt="loading" className="w-30 h-30 animate-pulse" />
+              <img src={umbrella} alt="loading" className="w-30 h-30 animate-pulse" />
             </div>
           )}
           {error && <div className="py-8 text-center text-red-600">{error}</div>}
-          {!loading && !error && books.length === 0 && <div className="py-8">No books found.</div>}
+          {!loading && !error && books.length === 0 && <div className="py-8">
+            No books found.
+          </div>}
 
           {!loading && books.length > 0 && (
             <>
