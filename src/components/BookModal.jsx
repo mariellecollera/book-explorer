@@ -62,12 +62,12 @@ export default function BookModal({ book, onClose }) {
         <div className="p-8">
           <div className="flex gap-8">
             <div className="flex-shrink-0">
-              <div className="w-56">
-                <div className="w-full h-[320px] relative border">
+              <div className="flex flex-col items-center  justify-center w-56">
+                <div className="f w-full h-[320px] relative border mb-2">
                   {!book && null}
                   <CoverWithPlaceholder src={book.cover} alt={`${book.title} cover`} />
                 </div>
-                <button className="button-black">Add to My Umbrella</button>
+                <button type="submit" className="button-black">Add to My Umbrella</button>
               </div>
             </div>
 
