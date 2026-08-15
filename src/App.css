@@ -3,11 +3,11 @@
   color: #fffffc;
   padding: 8px 20px;
   opacity: 1;
+  cursor: pointer;
 }
 
 .button-black:hover {
   opacity: 0.75;
-  cursor: pointer;
 }
 
 .button-white {
@@ -20,7 +20,6 @@
 
 .button-white:hover {
   opacity: 0.8;
-  cursor: pointer;
 }
 
 .box-decor {
