@@ -10,15 +10,15 @@ export default function Header() {
       </a>
 
       <nav className="flex items-center gap-[45px]">
-        <a href="#" className="italic text-[20px] hover:opacity-80">
+        <a href="#" className="italic text-[18px] hover:opacity-80">
           My Umbrella
         </a>
-        <a href="#" className="italic text-[20px] hover:opacity-80">
+        <a href="#" className="italic text-[18px] hover:opacity-80">
           Log in
         </a>
         <a
           href="#"
-          className="bg-[#fffffc] text-black italic text-[20px] px-3.5 py-1 hover:opacity-90"
+          className="button-white italic text-[18px]"
         >
           Sign up
         </a>

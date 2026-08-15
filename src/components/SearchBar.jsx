@@ -17,7 +17,7 @@ export default function SearchBar({ query, setQuery, onSearch }) {
         />
         <button
           type="submit"
-          className="bg-black text-[#fffffc] px-5 py-2 hover:opacity-90"
+          className="button-black"
         >
           Search
         </button>

@@ -67,7 +67,7 @@ export default function BookModal({ book, onClose }) {
                   {!book && null}
                   <CoverWithPlaceholder src={book.cover} alt={`${book.title} cover`} />
                 </div>
-                <button className="mt-4 w-full bg-black text-white py-2">Add to My Umbrella</button>
+                <button className="button-black">Add to My Umbrella</button>
               </div>
             </div>
 
