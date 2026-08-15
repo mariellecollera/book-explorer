@@ -90,7 +90,7 @@ export default function Results() {
                 <button
                   onClick={() => goToPage(page - 1)}
                   disabled={page <= 1}
-                  className="px-3 py-2 border rounded disabled:opacity-50"
+                  className={page <= 1 ? 'button-white' : 'button-black'}
                 >
                   Prev
                 </button>
@@ -98,7 +98,7 @@ export default function Results() {
                 <button
                   onClick={() => goToPage(page + 1)}
                   disabled={page >= totalPages}
-                  className="px-3 py-2 border rounded disabled:opacity-50"
+                  className={page >= totalPages ? 'button-white' : 'button-black'}
                 >
                   Next
                 </button>
