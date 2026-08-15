@@ -22,14 +22,13 @@ export default function Header() {
         >
           Sign up
         </a>
+        <button aria-label="Menu" className="flex flex-col gap-[5px] w-[25px]">
+          <span className="h-[2px] w-full bg-[#fffffc]" />
+          <span className="h-[2px] w-full bg-[#fffffc]" />
+          <span className="h-[2px] w-full bg-[#fffffc]" />
+        </button>
       </nav>
 
-      {/* Hamburger */}
-      <button aria-label="Menu" className="flex flex-col gap-[5px] w-[25px]">
-        <span className="h-[2px] w-full bg-[#fffffc]" />
-        <span className="h-[2px] w-full bg-[#fffffc]" />
-        <span className="h-[2px] w-full bg-[#fffffc]" />
-      </button>
     </header>
   );
 }
