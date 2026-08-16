@@ -145,7 +145,7 @@ export default function SearchBar({
               </button>
             )}
 
-            <div className="w-full absolute top-[50px] left-0">
+            <div className="w-full absolute z-50 top-[50px] left-0">
               {isActive && (
                 <div className="w-full flex flex-col gap-3 border border-black bg-white shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
                   <div className="mt-4 flex items-start justify-start gap-4 px-5">

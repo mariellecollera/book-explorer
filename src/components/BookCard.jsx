@@ -5,7 +5,7 @@ export default function BookCard({ cover, title, year, author, onSelect }) {
       tabIndex={0}
       onClick={onSelect}
       onKeyDown={(e) => {
-        if (e.key === 'Enter') onSelect && onSelect();
+        if (e.key === "Enter") onSelect && onSelect();
       }}
       className="w-[167px] flex flex-col gap-2.5 cursor-pointer"
     >
@@ -16,7 +16,7 @@ export default function BookCard({ cover, title, year, author, onSelect }) {
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="bg-[#fffffc] p-[7.5px]">
+      <div className="bg-[var(--color-white)] p-[7.5px]">
         <div className="flex items-baseline gap-[7.5px] whitespace-nowrap">
           <span className="text-[15px] text-black">{title}</span>
           <span className="text-xs text-[#8b8b8b]">{year}</span>
