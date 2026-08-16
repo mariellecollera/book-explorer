@@ -4,8 +4,8 @@ export default function ResultsCard({ cover, title, year, author, onSelect }) {
   const [loaded, setLoaded] = useState(false)
 
   return (
-    <div className="w-full max-w-[220px] cursor-pointer" onClick={onSelect} role="button" tabIndex={0} onKeyDown={(e)=>{ if(e.key==='Enter') onSelect && onSelect(); }}>
-      <div className="w-full h-[320px] border border-black shadow-[3px_4px_6px_0_rgba(0,0,0,0.25)] overflow-hidden mb-4 relative">
+    <div className="w-[200px] cursor-pointer" onClick={onSelect} role="button" tabIndex={0} onKeyDown={(e)=>{ if(e.key==='Enter') onSelect && onSelect(); }}>
+      <div className="w-full h-[300px] border border-black shadow-[3px_4px_6px_0_rgba(0,0,0,0.25)] overflow-hidden mb-4 relative">
         {!loaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
             <img src="/favicon.svg" alt="loading" className="w-16 h-16 text-gray-400 animate-pulse" style={{ animationDuration: '1400ms' }} />
@@ -19,8 +19,10 @@ export default function ResultsCard({ cover, title, year, author, onSelect }) {
           onError={() => setLoaded(true)}
         />
       </div>
-      <div className="text-lg font-semibold">{title}</div>
-      <div className="text-sm text-gray-500">{year}</div>
+      <div className="flex gap-1">
+        <div className="flex-grow-1 text-lg font-semibold">{title}</div>
+        <div className="text-sm text-gray-500">{year}</div>
+      </div>
       <div className="italic text-sm">{author}</div>
     </div>
   )
