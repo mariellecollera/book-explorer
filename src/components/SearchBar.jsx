@@ -284,7 +284,7 @@ export default function SearchBar({
                                 }}
                                 className="flex w-full items-center justify-between gap-3 text-left"
                               >
-                                <div className="min-w-0 flex-1 a ">
+                                <div className="min-w-0 flex-1">
                                   <div className="flex gap-2 font-medium">
                                     <span className="truncate">
                                       {" "}
