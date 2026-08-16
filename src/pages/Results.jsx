@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { LANGUAGE_OPTIONS } from "../components/SearchBar";
 import SearchBar from "../components/SearchBar";
 import ResultsCard from "../components/ResultsCard";
 import BookModal from "../components/BookModal";
+import Tag from "../components/Tag";
 import umbrella from "/favicon.svg";
 import empty from "../assets/no_books.svg";
+
+function languageLabel(code) {
+  return LANGUAGE_OPTIONS.find((opt) => opt.value === code)?.label || code;
+}
 
 export default function Results() {
   const [searchParams] = useSearchParams();
@@ -107,14 +113,13 @@ export default function Results() {
           <div className="text-2xl mb-6">
             Showing results for “{q}”
             {languageFilter.length > 0 || accessibleOnly ? (
-              <span className="text-base text-black/70">
-                {" "}
-                •{" "}
-                {languageFilter.length > 0
-                  ? `language: ${languageFilter.join(", ")}`
-                  : "all languages"}
-                {accessibleOnly ? " • readable only" : ""}
-              </span>
+              <div className="text-base text-white flex gap-2">
+                {accessibleOnly && <Tag label="Readable" />}
+
+                {languageFilter.map((lang) => (
+                  <Tag key={lang} label={languageLabel(lang)} />
+                ))}
+              </div>
             ) : null}
           </div>
 
@@ -143,7 +148,7 @@ export default function Results() {
 
           {!loading && books.length > 0 && (
             <>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-2 gap-y-4 items-start place-items-center">
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-x-2 gap-y-4 items-start place-items-center">
                 {books.map((b) => (
                   <ResultsCard
                     key={b.id}
