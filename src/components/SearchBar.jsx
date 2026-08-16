@@ -137,7 +137,7 @@ export default function SearchBar({
             {query && (
               <button
                 type="button"
-                onClick={() => setQuery("")}
+                onClick={() => setLanguageFilter("")}
                 aria-label="Clear search"
                 className="flex h-6 w-6 items-center justify-center rounded-full border border-black text-xs hover:bg-black hover:text-white"
               >
@@ -233,6 +233,23 @@ export default function SearchBar({
                         )}
                       </div>
                     )}
+
+                    <div className="px-5 pb-3 flex items-center justify-between">
+                      {(accessibleOnly || selectedLanguages.length > 0) && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setAccessibleOnly(false);
+                            setSelectedLanguages([]);
+                            setLanguageFilter([]);
+                          }}
+                          className="text-xs font-medium text-black/70 hover:text-black border-b border-dashed"
+                        >
+                          Clear filters
+                        </button>
+                      )}
+                      <div className="flex-1"></div>
+                    </div>
                   </div>
 
                   <div className="px-5 pb-3">
