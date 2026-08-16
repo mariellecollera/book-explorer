@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const LANGUAGE_OPTIONS = [
+export const LANGUAGE_OPTIONS = [
   { value: "all", label: "All languages" },
   { value: "eng", label: "English" },
   { value: "spa", label: "Spanish" },
