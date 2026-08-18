@@ -7,15 +7,11 @@ import wordmark from "../assets/wordmark.svg";
 
 export default function Home() {
   const [query, setQuery] = useState("");
-  const [languageFilter, setLanguageFilter] = useState([]);
-  const [accessibleOnly, setAccessibleOnly] = useState(false);
   const navigate = useNavigate();
 
   function onSearch() {
     if (!query || query.trim() === "") return;
-    navigate(
-      `/results?q=${encodeURIComponent(query)}&page=1&language=${encodeURIComponent(languageFilter.join("|"))}&readable=${accessibleOnly ? "1" : "0"}`,
-    );
+    navigate(`/results?q=${encodeURIComponent(query)}&page=1`);
   }
 
   return (
