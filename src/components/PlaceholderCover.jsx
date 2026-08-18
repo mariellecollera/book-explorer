@@ -10,7 +10,7 @@ export default function PlaceholderCover({ cover, title, year, author }) {
           className="w-8 h-8 mt-5 mb-4"
         />
         <div className="text-white text-center text-sm">
-          {title} {year && `(${year})`}
+          {title} {year && `[${year}]`}
         </div>
       </div>
       <div className="italic text-white text-sm">by {author}</div>
