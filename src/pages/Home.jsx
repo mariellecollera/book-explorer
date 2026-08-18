@@ -20,16 +20,16 @@ export default function Home() {
 
   return (
     <>
-      <section className="flex flex-col items-center max-w-[1200px] m-10 px-5 py-10">
+      <main className="flex flex-col items-center max-w-[1200px] m-10 px-5 py-10 gap-5">
         <img
           src={umbrella}
           alt="The Umbrella Library Icon"
-          className="h-14 w-auto mx-auto mb-5"
+          className="h-14 w-auto mx-auto"
         />
         <img
           src={wordmark}
           alt="The Umbrella Library Wordmark"
-          className="h-14 w-auto mx-auto mb-5"
+          className="h-14 w-auto mx-auto"
         />
         <p className="text-black italic text-[20px] mb-5">
           All your books under one umbrella.
@@ -44,7 +44,7 @@ export default function Home() {
           accessibleOnly={accessibleOnly}
           setAccessibleOnly={setAccessibleOnly}
         />
-      </section>
+      </main>
     </>
   );
 }
