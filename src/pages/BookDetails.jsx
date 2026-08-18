@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import umbrella_white from "../assets/umbrella_white.svg";
+import {
+  addToMyUmbrella,
+  isInMyUmbrella,
+  removeFromMyUmbrella,
+} from "../utils/myUmbrella";
 
 export default function BookDetails() {
   const { workKey } = useParams();
@@ -13,6 +18,7 @@ export default function BookDetails() {
   const [ratingCount, setRatingCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [inUmbrella, setInUmbrella] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -145,6 +151,21 @@ export default function BookDetails() {
   const firstLanguage = book?.raw?.language?.[0] || "N/A";
   const firstISBN = book?.raw?.isbn?.[0] || "N/A";
 
+  useEffect(() => {
+    setInUmbrella(book ? isInMyUmbrella(book.id) : false);
+  }, [book]);
+
+  function toggleUmbrella() {
+    if (!book) return;
+    if (inUmbrella) {
+      removeFromMyUmbrella(book.id);
+      setInUmbrella(false);
+    } else {
+      addToMyUmbrella(book);
+      setInUmbrella(true);
+    }
+  }
+
   if (notFound) {
     return (
       <div className="mx-auto px-5 py-8 max-w-5xl">
@@ -177,8 +198,12 @@ export default function BookDetails() {
                   year={book.year}
                 />
               </div>
-              <button type="submit" className="button-black">
-                Add to My Umbrella
+              <button
+                type="button"
+                onClick={toggleUmbrella}
+                className="button-black"
+              >
+                {inUmbrella ? "Added to My Umbrella" : "Add to My Umbrella"}
               </button>
             </div>
           </div>

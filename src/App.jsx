@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Results from "./pages/Results";
 import BookDetails from "./pages/BookDetails";
+import MyUmbrella from "./pages/MyUmbrella";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/results" element={<Results />} />
         <Route path="/book/:workKey" element={<BookDetails />} />
+        <Route path="/my-umbrella" element={<MyUmbrella />} />
       </Routes>
     </>
   );
