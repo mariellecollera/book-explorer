@@ -1,25 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { LANGUAGE_OPTIONS } from "../components/SearchBar";
 import SearchBar from "../components/SearchBar";
 import ResultsCard from "../components/ResultsCard";
-import Tag from "../components/Tag";
 import umbrella from "/favicon.svg";
 import empty from "../assets/no_books.svg";
-
-function languageLabel(code) {
-  return LANGUAGE_OPTIONS.find((opt) => opt.value === code)?.label || code;
-}
 
 export default function Results() {
   const [searchParams] = useSearchParams();
   const q = searchParams.get("q") || "";
-  const languageParamRaw = searchParams.get("language") || "";
-  const languageParam = languageParamRaw.split("|").filter(Boolean);
-  const readableParam = searchParams.get("readable") === "1";
   const [query, setQuery] = useState(q);
-  const [languageFilter, setLanguageFilter] = useState(languageParam);
-  const [accessibleOnly, setAccessibleOnly] = useState(readableParam);
   const pageParam = parseInt(searchParams.get("page") || "1", 10) || 1;
   const [page, setPage] = useState(pageParam);
   const [totalResults, setTotalResults] = useState(0);
@@ -30,12 +19,8 @@ export default function Results() {
   const perPage = 20;
 
   useEffect(() => {
-    const currentLanguageParam = languageParamRaw.split("|").filter(Boolean);
-
     setQuery(q);
     setPage(pageParam);
-    setLanguageFilter(currentLanguageParam);
-    setAccessibleOnly(readableParam);
     if (!q) return;
 
     setLoading(true);
@@ -46,10 +31,6 @@ export default function Results() {
       page: String(pageParam),
       limit: String(perPage),
     });
-
-    if (currentLanguageParam.length > 0)
-      params.set("language", currentLanguageParam.join("|"));
-    if (readableParam) params.set("has_fulltext", "true");
 
     fetch(`https://openlibrary.org/search.json?${params.toString()}`)
       .then((res) => {
@@ -75,13 +56,11 @@ export default function Results() {
       })
       .catch((err) => setError(err.message || "Failed to fetch"))
       .finally(() => setLoading(false));
-  }, [q, pageParam, languageParamRaw, readableParam]);
+  }, [q, pageParam]);
 
   function onSearch() {
     if (!query || query.trim() === "") return;
-    navigate(
-      `/results?q=${encodeURIComponent(query)}&page=1&language=${encodeURIComponent(languageFilter.join("|"))}&readable=${accessibleOnly ? "1" : "0"}`,
-    );
+    navigate(`/results?q=${encodeURIComponent(query)}&page=1`);
   }
 
   const totalPages = Math.max(1, Math.ceil((totalResults || 0) / perPage));
@@ -89,37 +68,16 @@ export default function Results() {
   function goToPage(newPage) {
     if (newPage < 1 || newPage > totalPages) return;
     setPage(newPage);
-    navigate(
-      `/results?q=${encodeURIComponent(query)}&page=${newPage}&language=${encodeURIComponent(languageFilter.join("|"))}&readable=${accessibleOnly ? "1" : "0"}`,
-    );
+    navigate(`/results?q=${encodeURIComponent(query)}&page=${newPage}`);
   }
 
   return (
     <div className="min-h-screen">
       <div className="mx-auto px-5 py-8">
-        <SearchBar
-          query={query}
-          setQuery={setQuery}
-          onSearch={onSearch}
-          languageFilter={languageFilter}
-          setLanguageFilter={setLanguageFilter}
-          accessibleOnly={accessibleOnly}
-          setAccessibleOnly={setAccessibleOnly}
-        />
+        <SearchBar query={query} setQuery={setQuery} onSearch={onSearch} />
 
         <div className="mt-6">
-          <div className="text-2xl mb-6">
-            Showing results for “{q}”
-            {languageFilter.length > 0 || accessibleOnly ? (
-              <div className="text-base text-white flex gap-2">
-                {accessibleOnly && <Tag label="Readable" />}
-
-                {languageFilter.map((lang) => (
-                  <Tag key={lang} label={languageLabel(lang)} />
-                ))}
-              </div>
-            ) : null}
-          </div>
+          <div className="text-2xl mb-6">Showing results for “{q}”</div>
 
           {loading && (
             <div className="py-20 flex items-center justify-center">
