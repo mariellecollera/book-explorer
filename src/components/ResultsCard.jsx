@@ -1,5 +1,5 @@
 import { useState } from "react";
-import BookCard from "./PlaceholderCover";
+import PlaceholderCover from "./PlaceholderCover";
 
 export default function ResultsCard({ cover, title, year, author, onSelect }) {
   const [loaded, setLoaded] = useState(false);
@@ -36,7 +36,7 @@ export default function ResultsCard({ cover, title, year, author, onSelect }) {
             />
           </>
         ) : (
-          <BookCard title={title} author={author} year={year} />
+          <PlaceholderCover title={title} author={author} year={year} />
         )}
       </div>
       <div className="text-lg font-semibold">{title}</div>
