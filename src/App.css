@@ -4,6 +4,7 @@
   padding: 8px 20px;
   opacity: 1;
   cursor: pointer;
+  font-style: italic;
 }
 
 .button-black:hover {
@@ -16,6 +17,7 @@
   color: var(--color-black);
   padding: 8px 20px;
   opacity: 1;
+  font-style: italic;
 }
 
 .button-white:hover {

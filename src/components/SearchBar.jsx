@@ -31,7 +31,7 @@ export default function SearchBar({ query, setQuery, onSearch }) {
               type="button"
               onClick={() => setQuery("")}
               aria-label="Clear search"
-              className="flex h-6 w-6 items-center justify-center rounded-full border border-black text-xs hover:bg-black hover:text-white"
+              className="flex h-6 w-6 items-center justify-center text-2xl hover:bg-black hover:text-white"
             >
               ×
             </button>

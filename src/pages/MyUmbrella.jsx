@@ -24,14 +24,18 @@ export default function MyUmbrella() {
         <p className="text-black italic text-[20px] mb-5">
           View all books under your umbrella.
         </p>
-
-        <button className="button-black mb-6">+ Add a book</button>
       </div>
 
       {books.length === 0 ? (
-        <div className="py-8 flex flex-col items-center justify-center italic text-[18px]">
-          <img src={empty} alt="No books saved" className="w-30 h-30 mb-2" />
-          Your Umbrella is empty.
+        <div className="py-8 flex flex-col items-center justify-center italic text-[18px] gap-3">
+          <div className="flex flex-col items-center">
+            <img src={empty} alt="No books saved" className=" w-30 h-30 mb-2" />
+            Your Umbrella is empty.
+          </div>
+
+          <button className="button-black mb-6" onClick={() => navigate("/")}>
+            + Add a book
+          </button>
         </div>
       ) : (
         <>
