@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import umbrella_white from "../assets/umbrella_white.svg";
+import PlaceholderCover from "../components/PlaceholderCover";
 import {
   addToMyUmbrella,
   isInMyUmbrella,
@@ -190,7 +190,7 @@ export default function BookDetails() {
           <div className="flex-shrink-0">
             <div className="flex flex-col items-center justify-center w-56">
               <div className="w-full h-[320px] border mb-2">
-                <CoverWithPlaceholder
+                <PlaceholderCover
                   src={book.cover}
                   alt={`${book.title} cover`}
                   title={book.title}
@@ -285,47 +285,6 @@ function BookDetailsSkeleton() {
           <div className="h-4 w-2/5 bg-gray-200" />
         </div>
       </div>
-    </div>
-  );
-}
-
-function CoverWithPlaceholder({ src, alt, title, author, year }) {
-  const [loaded, setLoaded] = useState(false);
-
-  if (!src) {
-    return (
-      <div className="bg-[var(--color-black)] w-full h-full flex flex-col items-center justify-start p-5 gap-2.5">
-        <img
-          src={umbrella_white}
-          alt="White umbrella logo"
-          className="w-8 h-8 mt-5 mb-4"
-        />
-        <div className="italic text-white text-center text-sm">{title}</div>
-        <div className="italic text-white text-center text-sm">{author}</div>
-        <div className="italic text-white text-center text-sm">{year}</div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="w-full h-full overflow-hidden relative">
-      {!loaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-          <img
-            src="/favicon.svg"
-            alt="loading"
-            className="w-16 h-16 text-gray-400 animate-pulse"
-            style={{ animationDuration: "1400ms" }}
-          />
-        </div>
-      )}
-      <img
-        src={src}
-        alt={alt}
-        className={`w-full h-full object-cover ${loaded ? "opacity-100" : "opacity-0"}`}
-        onLoad={() => setLoaded(true)}
-        onError={() => setLoaded(true)}
-      />
     </div>
   );
 }

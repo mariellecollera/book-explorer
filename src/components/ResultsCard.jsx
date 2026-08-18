@@ -1,5 +1,5 @@
 import { useState } from "react";
-import umbrella_white from "../assets/umbrella_white.svg";
+import BookCard from "./PlaceholderCover";
 
 export default function ResultsCard({ cover, title, year, author, onSelect }) {
   const [loaded, setLoaded] = useState(false);
@@ -36,18 +36,7 @@ export default function ResultsCard({ cover, title, year, author, onSelect }) {
             />
           </>
         ) : (
-          <div className="bg-[var(--color-black)] w-full h-full flex flex-col items-center justify-start p-5 gap-2.5">
-            <img
-              src={umbrella_white}
-              alt="White umbrella logo"
-              className="w-8 h-8 mt-5 mb-4"
-            />
-            <div className="italic text-white text-center text-sm">{title}</div>
-            <div className="italic text-white text-center text-sm">
-              {author}
-            </div>
-            <div className="italic text-white text-center text-sm">{year}</div>
-          </div>
+          <BookCard title={title} author={author} year={year} />
         )}
       </div>
       <div className="text-lg font-semibold">{title}</div>
