@@ -190,13 +190,20 @@ export default function BookDetails() {
           <div className="flex-shrink-0">
             <div className="flex flex-col items-center justify-center w-56">
               <div className="w-full h-[320px] border mb-2">
-                <PlaceholderCover
-                  src={book.cover}
-                  alt={`${book.title} cover`}
-                  title={book.title}
-                  author={book.author}
-                  year={book.year}
-                />
+                {cover ? (
+                  <img
+                    src={cover}
+                    alt={`${title} cover`}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <PlaceholderCover
+                    cover={cover}
+                    title={title}
+                    year={year}
+                    author={author}
+                  />
+                )}
               </div>
               <button
                 type="button"
