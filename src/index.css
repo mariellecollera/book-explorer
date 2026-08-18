@@ -1,4 +1,11 @@
 @import "tailwindcss";
 @layer base {
-  html { font-family: 'IM Fell Double Pica', serif; }
+  html {
+    font-family: "IM Fell Double Pica", serif;
+  }
+}
+
+:root {
+  --color-black: #000000;
+  --color-white: #fffffc;
 }
