@@ -203,7 +203,7 @@ export default function BookDetails() {
                 onClick={toggleUmbrella}
                 className="button-black"
               >
-                {inUmbrella ? "Added to My Umbrella" : "Add to My Umbrella"}
+                {inUmbrella ? "Remove from My Umbrella" : "Add to My Umbrella"}
               </button>
             </div>
           </div>
