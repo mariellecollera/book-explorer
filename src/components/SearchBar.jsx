@@ -37,7 +37,9 @@ export default function SearchBar({
 
   useEffect(() => {
     fetch("https://openlibrary.org/languages.json")
-      .then((res) => (res.ok ? res.json() : Promise.reject("languages fetch failed")))
+      .then((res) =>
+        res.ok ? res.json() : Promise.reject("languages fetch failed"),
+      )
       .then((data) => {
         const mapped = (data || [])
           .filter((lang) => lang.marc_code && lang.name)
@@ -82,7 +84,7 @@ export default function SearchBar({
       });
 
       if (selectedLanguages.length > 0) {
-        params.set("lang", selectedLanguages.join("|"));
+        params.set("language", selectedLanguages.join("|"));
       }
       if (accessibleOnly) params.set("has_fulltext", "true");
 

@@ -48,7 +48,7 @@ export default function Results() {
     });
 
     if (currentLanguageParam.length > 0)
-      params.set("lang", currentLanguageParam.join("|"));
+      params.set("language", currentLanguageParam.join("|"));
     if (readableParam) params.set("has_fulltext", "true");
 
     fetch(`https://openlibrary.org/search.json?${params.toString()}`)
