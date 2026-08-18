@@ -26,19 +26,13 @@ export default function MyUmbrella() {
         </p>
       </div>
 
-      {books.length === 0 ? (
-        <div className="py-8 flex flex-col items-center justify-center italic text-[18px] gap-3">
-          <div className="flex flex-col items-center">
-            <img src={empty} alt="No books saved" className=" w-30 h-30 mb-2" />
+      <div className="w-full border border-black p-6">
+        {books.length === 0 ? (
+          <div className="py-8 flex flex-col items-center justify-center italic text-[18px]">
+            <img src={empty} alt="No books saved" className="w-30 h-30 mb-2" />
             Your Umbrella is empty.
           </div>
-
-          <button className="button-black mb-6" onClick={() => navigate("/")}>
-            + Add a book
-          </button>
-        </div>
-      ) : (
-        <>
+        ) : (
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-x-2 gap-y-4 items-start place-items-center">
             {books.map((b) => (
               <div key={b.id} className="relative">
@@ -65,8 +59,8 @@ export default function MyUmbrella() {
               </div>
             ))}
           </div>
-        </>
-      )}
+        )}
+      </div>
     </main>
   );
 }
