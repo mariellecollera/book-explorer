@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import PlaceholderCover from "../components/PlaceholderCover";
+import Modal from "../components/Modal";
 import {
   addToMyUmbrella,
   isInMyUmbrella,
@@ -19,6 +20,8 @@ export default function BookDetails() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [inUmbrella, setInUmbrella] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
     let cancelled = false;
@@ -160,10 +163,13 @@ export default function BookDetails() {
     if (inUmbrella) {
       removeFromMyUmbrella(book.id);
       setInUmbrella(false);
+      setModalMessage(`"${book.title}" is no longer in your Umbrella.`);
     } else {
       addToMyUmbrella(book);
       setInUmbrella(true);
+      setModalMessage(`"${book.title}" is now in your Umbrella.`);
     }
+    setModalOpen(true);
   }
 
   if (notFound) {
@@ -210,7 +216,9 @@ export default function BookDetails() {
                 onClick={toggleUmbrella}
                 className="button-black"
               >
-                {inUmbrella ? "Remove from My Umbrella" : "Add to My Umbrella"}
+                {inUmbrella
+                  ? "Remove from My Umbrella"
+                  : "+ Add to My Umbrella"}
               </button>
             </div>
           </div>
@@ -259,6 +267,13 @@ export default function BookDetails() {
           </div>
         </div>
       )}
+
+      <Modal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title={inUmbrella ? "Successfully Added!" : "Successfully Removed."}
+        message={modalMessage}
+      />
     </div>
   );
 }
