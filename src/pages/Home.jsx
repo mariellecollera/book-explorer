@@ -31,15 +31,7 @@ export default function Home() {
           All your books under one umbrella.
         </p>
 
-        <SearchBar
-          query={query}
-          setQuery={setQuery}
-          onSearch={onSearch}
-          languageFilter={languageFilter}
-          setLanguageFilter={setLanguageFilter}
-          accessibleOnly={accessibleOnly}
-          setAccessibleOnly={setAccessibleOnly}
-        />
+        <SearchBar query={query} setQuery={setQuery} onSearch={onSearch} />
       </main>
     </>
   );
