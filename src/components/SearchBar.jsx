@@ -29,8 +29,24 @@ export default function SearchBar({
   );
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [languageSearchInput, setLanguageSearchInput] = useState("");
+  const [allLanguages, setAllLanguages] = useState(
+    LANGUAGE_OPTIONS.filter((option) => option.value !== "all"),
+  );
   const searchRef = useRef(null);
   const languageDropdownRef = useRef(null);
+
+  useEffect(() => {
+    fetch("https://openlibrary.org/languages.json")
+      .then((res) => (res.ok ? res.json() : Promise.reject("languages fetch failed")))
+      .then((data) => {
+        const mapped = (data || [])
+          .filter((lang) => lang.marc_code && lang.name)
+          .map((lang) => ({ value: lang.marc_code, label: lang.name }))
+          .sort((a, b) => a.label.localeCompare(b.label));
+        if (mapped.length > 0) setAllLanguages(mapped);
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -105,6 +121,14 @@ export default function SearchBar({
     setLanguageFilter(updatedLanguages);
   };
 
+  const languageDropdownLabel =
+    selectedLanguages.length === 0
+      ? "Select languages"
+      : selectedLanguages.length === 1
+        ? allLanguages.find((lang) => lang.value === selectedLanguages[0])
+            ?.label || selectedLanguages[0]
+        : `Languages (${selectedLanguages.length})`;
+
   return (
     <div ref={searchRef} className="w-full max-w-[900px] mx-auto">
       <form
@@ -137,7 +161,10 @@ export default function SearchBar({
             {query && (
               <button
                 type="button"
-                onClick={() => setQuery("")}
+                onClick={() => {
+                  setQuery("");
+                  setPreviewBooks([]);
+                }}
                 aria-label="Clear search"
                 className="flex h-6 w-6 items-center justify-center rounded-full border border-black text-xs hover:bg-black hover:text-white"
               >
@@ -169,9 +196,9 @@ export default function SearchBar({
                           onClick={() =>
                             setIsLanguageDropdownOpen(!isLanguageDropdownOpen)
                           }
-                          className="flex items-center justify-between gap-2 border border-black bg-white px-3 py-2 text-sm w-full hover:bg-black/5"
+                          className="flex items-center justify-between gap-2 border border-black bg-[var(--color-white)] px-3 py-2 text-sm w-full hover:bg-black/5"
                         >
-                          <span>Select languages</span>
+                          <span>{languageDropdownLabel}</span>
                           <svg
                             className={`h-4 w-4 transition-transform ${
                               isLanguageDropdownOpen ? "rotate-180" : ""
@@ -190,7 +217,7 @@ export default function SearchBar({
                         </button>
 
                         {isLanguageDropdownOpen && (
-                          <div className="absolute top-full left-0 right-0 z-50 mt-0 border border-t-0 border-black bg-white shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
+                          <div className="absolute top-full left-0 right-0 z-50 mt-0 border border-t-0 border-black bg-[var(--color-white)] shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
                             <div className="max-h-80 overflow-y-auto">
                               <label className="flex items-center gap-3 px-4 py-2 cursor-pointer border-b border-black hover:bg-black/5">
                                 <input
@@ -206,9 +233,7 @@ export default function SearchBar({
                                   Any Language
                                 </span>
                               </label>
-                              {LANGUAGE_OPTIONS.filter(
-                                (option) => option.value !== "all",
-                              ).map((option) => (
+                              {allLanguages.map((option) => (
                                 <label
                                   key={option.value}
                                   className="flex items-center gap-3 px-4 py-2 cursor-pointer hover:bg-black/5"
@@ -253,7 +278,7 @@ export default function SearchBar({
                   </div>
 
                   <div className="px-5 pb-3">
-                    <div className="max-h-80 overflow-y-auto rounded bg-white">
+                    <div className="max-h-80 overflow-y-auto bg-[var(--color-white)]">
                       {previewLoading && (
                         <div className="px-2 py-3 italic text-sm text-black/70 text-center">
                           Searching...
@@ -273,7 +298,7 @@ export default function SearchBar({
                           {previewBooks.slice(0, 10).map((book) => (
                             <li
                               key={book.id}
-                              className="rounded px-2 py-2 hover:bg-black/5"
+                              className="px-2 py-2 hover:bg-black/5"
                             >
                               <button
                                 type="button"
