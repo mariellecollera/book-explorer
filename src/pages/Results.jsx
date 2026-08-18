@@ -3,7 +3,6 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { LANGUAGE_OPTIONS } from "../components/SearchBar";
 import SearchBar from "../components/SearchBar";
 import ResultsCard from "../components/ResultsCard";
-import BookModal from "../components/BookModal";
 import Tag from "../components/Tag";
 import umbrella from "/favicon.svg";
 import empty from "../assets/no_books.svg";
@@ -27,7 +26,6 @@ export default function Results() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [selectedBook, setSelectedBook] = useState(null);
   const navigate = useNavigate();
   const perPage = 20;
 
@@ -68,7 +66,7 @@ export default function Results() {
           year: d.first_publish_year,
           cover: d.cover_i
             ? `https://covers.openlibrary.org/b/id/${d.cover_i}-M.jpg`
-            : umbrella,
+            : null,
           subjects: d.subject || [],
           edition_count: d.edition_count,
           raw: d,
@@ -153,7 +151,14 @@ export default function Results() {
                   <ResultsCard
                     key={b.id}
                     {...b}
-                    onSelect={() => setSelectedBook(b)}
+                    onSelect={() =>
+                      navigate(
+                        `/book/${encodeURIComponent(b.id.replace("/works/", ""))}`,
+                        {
+                          state: { book: b },
+                        },
+                      )
+                    }
                   />
                 ))}
               </div>
@@ -183,8 +188,6 @@ export default function Results() {
           )}
         </div>
       </div>
-
-      <BookModal book={selectedBook} onClose={() => setSelectedBook(null)} />
     </div>
   );
 }

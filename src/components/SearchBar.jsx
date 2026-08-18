@@ -137,7 +137,7 @@ export default function SearchBar({
             {query && (
               <button
                 type="button"
-                onClick={() => setLanguageFilter("")}
+                onClick={() => setQuery("")}
                 aria-label="Clear search"
                 className="flex h-6 w-6 items-center justify-center rounded-full border border-black text-xs hover:bg-black hover:text-white"
               >
@@ -147,7 +147,7 @@ export default function SearchBar({
 
             <div className="w-full absolute z-50 top-[50px] left-0">
               {isActive && (
-                <div className="w-full flex flex-col gap-3 border border-black bg-white shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
+                <div className="w-full flex flex-col gap-3 border border-black bg-[var(--color-white)] shadow-[0_8px_24px_rgba(0,0,0,0.12)]">
                   <div className="mt-4 flex items-start justify-start gap-4 px-5">
                     <label className="flex items-center gap-2 text-sm font-medium">
                       <input
