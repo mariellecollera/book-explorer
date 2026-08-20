@@ -21,9 +21,16 @@ export default function MyUmbrella() {
     <main className="flex flex-col items-center max-w-[1200px] m-10 px-5 py-10">
       <div className="flex flex-col items-center mb-10 gap-5">
         <img src={my_umbrella} alt="My Umbrella" className="h-14 w-auto" />
-        <p className="text-black italic text-[20px] mb-5">
+        <p className="text-black italic text-[16px]">
           View all books under your umbrella.
         </p>
+
+        <button
+          className="button-black mt-6"
+          onClick={() => navigate("/results")}
+        >
+          + Add a book
+        </button>
       </div>
 
       <div className="w-full border border-black p-6">
@@ -33,22 +40,12 @@ export default function MyUmbrella() {
             Your Umbrella is empty.
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-x-2 gap-y-4 items-start place-items-center">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-x-2 gap-y-4 items-start place-items-center">
             {books.map((b) => (
               <div key={b.id} className="relative">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleRemove(b.id);
-                  }}
-                  aria-label={`Remove ${b.title} from My Umbrella`}
-                  className="absolute top-1 right-1 z-10 flex h-6 w-6 items-center justify-center rounded-full border border-black bg-white text-xs hover:bg-black hover:text-white"
-                >
-                  ×
-                </button>
                 <ResultsCard
                   {...b}
+                  isMyUmbrella={true}
                   onSelect={() =>
                     navigate(
                       `/book/${encodeURIComponent(b.id.replace("/works/", ""))}`,

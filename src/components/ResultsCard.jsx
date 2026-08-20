@@ -1,7 +1,15 @@
 import { useState } from "react";
 import PlaceholderCover from "./PlaceholderCover";
+import umbrella_shape from "../assets/umbrella_shape.svg";
 
-export default function ResultsCard({ cover, title, year, author, onSelect }) {
+export default function ResultsCard({
+  cover,
+  title,
+  year,
+  author,
+  isMyUmbrella,
+  onSelect,
+}) {
   const [loaded, setLoaded] = useState(false);
 
   return (
@@ -14,7 +22,14 @@ export default function ResultsCard({ cover, title, year, author, onSelect }) {
         if (e.key === "Enter") onSelect && onSelect();
       }}
     >
-      <div className="w-full h-[320px] border border-black shadow-[3px_4px_6px_0_rgba(0,0,0,0.25)] overflow-hidden mb-4 relative">
+      <div className="w-[90px] h-[135px] sm:w-[110px] sm:h-[165px] md:w-[180px] md:h-[250px] border border-black shadow-[3px_4px_6px_0_rgba(0,0,0,0.25)] overflow-hidden mb-4 relative">
+        {isMyUmbrella && (
+          <img
+            src={umbrella_shape}
+            alt="umbrella shape"
+            className="absolute top-[-5px] right-[-5px] rotate-45 w-12 object-cover"
+          />
+        )}
         {cover ? (
           <>
             {!loaded && (

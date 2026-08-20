@@ -109,6 +109,7 @@ export default function Results() {
                   <ResultsCard
                     key={b.id}
                     {...b}
+                    isMyUmbrella={false}
                     onSelect={() =>
                       navigate(
                         `/book/${encodeURIComponent(b.id.replace("/works/", ""))}`,
