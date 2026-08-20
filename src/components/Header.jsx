@@ -4,7 +4,7 @@ import wordmark from "../assets/wordmark_white.svg";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 bg-black text-[#fffffc] flex items-center justify-between px-10 py-3">
+    <header className="sticky top-0 z-50 bg-black text-[#fffffc] flex items-center justify-between px-10 py-2">
       <a href="/" className="flex items-center gap-3">
         <img src={umbrella} alt="Umbrella Icon" className="h-8 w-auto" />
         <img
