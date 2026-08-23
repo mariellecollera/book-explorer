@@ -77,8 +77,6 @@ export default function Results() {
         <SearchBar query={query} setQuery={setQuery} onSearch={onSearch} />
 
         <div className="mt-6">
-          <div className="text-2xl mb-6">Showing results for “{q}”</div>
-
           {loading && (
             <div className="py-20 flex items-center justify-center">
               <img
@@ -104,6 +102,7 @@ export default function Results() {
 
           {!loading && books.length > 0 && (
             <>
+              <div className="text-2xl mb-6">Showing results for “{q}”</div>
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-x-2 gap-y-4 items-start place-items-center">
                 {books.map((b) => (
                   <ResultsCard
