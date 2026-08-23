@@ -26,7 +26,7 @@ export default function MyUmbrella() {
         </p>
       </div>
 
-      <div className="border border-black p-6">
+      <div className="w-full border border-black p-5">
         <div className="flex justify-end mb-5">
           <button className="button-black" onClick={() => navigate("/results")}>
             + Add a book
