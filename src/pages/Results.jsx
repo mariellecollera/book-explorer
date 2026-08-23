@@ -5,6 +5,8 @@ import BookCard from "../components/BookCard";
 import umbrella from "/favicon.svg";
 import empty from "../assets/no_books.svg";
 
+const resultsCache = new Map();
+
 export default function Results() {
   const [searchParams] = useSearchParams();
   const q = searchParams.get("q") || "";
@@ -21,6 +23,20 @@ export default function Results() {
     setQuery(q);
     if (!q) return;
 
+    const cacheKey = `${q.toLowerCase()}-${page}-${perPage}`;
+    const cached = resultsCache.get(cacheKey);
+
+    // Already fetched this exact search + page before — reuse it,
+    // no network call, no loading flicker.
+    if (cached) {
+      setBooks(cached.books);
+      setTotalResults(cached.totalResults);
+      setLoading(false);
+      setError(null);
+      return;
+    }
+
+    let cancelled = false;
     setLoading(true);
     setError(null);
 
@@ -37,7 +53,6 @@ export default function Results() {
       })
       .then((data) => {
         const docs = data.docs || [];
-        setTotalResults(data.numFound || 0);
         const mapped = docs.map((d) => ({
           id: d.key,
           title: d.title,
@@ -50,10 +65,22 @@ export default function Results() {
           edition_count: d.edition_count,
           raw: d,
         }));
-        setBooks(mapped);
+        const result = { books: mapped, totalResults: data.numFound || 0 };
+
+        resultsCache.set(cacheKey, result);
+        setBooks(result.books);
+        setTotalResults(result.totalResults);
       })
-      .catch((err) => setError(err.message || "Failed to fetch"))
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        if (!cancelled) setError(err.message || "Failed to fetch");
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [q, page]);
 
   function onSearch() {
