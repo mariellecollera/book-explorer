@@ -9,18 +9,16 @@ export default function Results() {
   const [searchParams] = useSearchParams();
   const q = searchParams.get("q") || "";
   const [query, setQuery] = useState(q);
-  const pageParam = parseInt(searchParams.get("page") || "1", 10) || 1;
-  const [page, setPage] = useState(pageParam);
+  const page = parseInt(searchParams.get("page") || "1", 10) || 1;
   const [totalResults, setTotalResults] = useState(0);
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const perPage = 20;
+  const perPage = 40;
 
   useEffect(() => {
     setQuery(q);
-    setPage(pageParam);
     if (!q) return;
 
     setLoading(true);
@@ -28,7 +26,7 @@ export default function Results() {
 
     const params = new URLSearchParams({
       q,
-      page: String(pageParam),
+      page: String(page),
       limit: String(perPage),
     });
 
@@ -56,7 +54,7 @@ export default function Results() {
       })
       .catch((err) => setError(err.message || "Failed to fetch"))
       .finally(() => setLoading(false));
-  }, [q, pageParam]);
+  }, [q, page]);
 
   function onSearch() {
     if (!query || query.trim() === "") return;
@@ -67,7 +65,6 @@ export default function Results() {
 
   function goToPage(newPage) {
     if (newPage < 1 || newPage > totalPages) return;
-    setPage(newPage);
     navigate(`/results?q=${encodeURIComponent(query)}&page=${newPage}`);
   }
 
@@ -136,7 +133,7 @@ export default function Results() {
                   onClick={() => goToPage(page + 1)}
                   disabled={page >= totalPages}
                   className={
-                    page >= totalPages ? "button-white " : "button-black"
+                    page >= totalPages ? "button-white" : "button-black"
                   }
                 >
                   Next
