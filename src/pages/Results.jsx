@@ -136,7 +136,7 @@ export default function Results() {
                   onClick={() => goToPage(page + 1)}
                   disabled={page >= totalPages}
                   className={
-                    page >= totalPages ? "button-white" : "button-black"
+                    page >= totalPages ? "button-white " : "button-black"
                   }
                 >
                   Next

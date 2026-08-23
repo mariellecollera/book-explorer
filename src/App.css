@@ -18,10 +18,15 @@
   padding: 8px 20px;
   opacity: 1;
   font-style: italic;
+  cursor: pointer;
 }
 
 .button-white:hover {
   opacity: 0.8;
+}
+
+.button-white:disabled {
+  cursor: default;
 }
 
 .box-decor {
