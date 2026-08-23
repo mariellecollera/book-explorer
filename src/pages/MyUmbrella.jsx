@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ResultsCard from "../components/ResultsCard";
+import BookCard from "../components/BookCard";
 import { getMyUmbrella, removeFromMyUmbrella } from "../utils/myUmbrella";
 import my_umbrella from "../assets/my_umbrella.svg";
 import empty from "../assets/no_books.svg";
@@ -42,7 +42,7 @@ export default function MyUmbrella() {
           <div className="bg-[pink] grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 items-start place-items-center items-center">
             {books.map((b) => (
               <div key={b.id} className="relative">
-                <ResultsCard
+                <BookCard
                   {...b}
                   isMyUmbrella={true}
                   onSelect={() =>

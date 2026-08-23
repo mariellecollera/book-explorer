@@ -2,7 +2,7 @@ import { useState } from "react";
 import PlaceholderCover from "./PlaceholderCover";
 import umbrella_shape from "../assets/umbrella_shape.svg";
 
-export default function ResultsCard({
+export default function BookCard({
   cover,
   title,
   year,

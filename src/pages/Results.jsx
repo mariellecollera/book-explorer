@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
-import ResultsCard from "../components/ResultsCard";
+import BookCard from "../components/BookCard";
 import umbrella from "/favicon.svg";
 import empty from "../assets/no_books.svg";
 
@@ -105,7 +105,7 @@ export default function Results() {
               <div className="text-2xl mb-6">Showing results for “{q}”</div>
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-x-2 gap-y-4 items-start place-items-center">
                 {books.map((b) => (
-                  <ResultsCard
+                  <BookCard
                     key={b.id}
                     {...b}
                     isMyUmbrella={false}
