@@ -15,7 +15,7 @@ export default function BookCard({
 
   return (
     <div
-      className="flex flex-col items-center cursor-pointer"
+      className="flex flex-col items-center cursor-pointer duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-102"
       onClick={onSelect}
       role="button"
       tabIndex={0}
