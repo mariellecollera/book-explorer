@@ -39,7 +39,7 @@ export default function MyUmbrella() {
             Your Umbrella is empty.
           </div>
         ) : (
-          <div className="bg-[pink] grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 items-start place-items-center items-center">
+          <div className="bg-[pink] grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 items-start place-items-center">
             {books.map((b) => (
               <div key={b.id} className="relative">
                 <BookCard
