@@ -7,6 +7,13 @@ import {
   isInMyUmbrella,
   removeFromMyUmbrella,
 } from "../utils/myUmbrella";
+import {
+  fetchWorkData,
+  fetchEditionInfo,
+  fetchAuthorName,
+  fetchRatings,
+  extractSynopsis,
+} from "../utils/openLibrary";
 
 export default function BookDetails() {
   const { workKey } = useParams();
@@ -27,118 +34,97 @@ export default function BookDetails() {
     let cancelled = false;
     const fullWorkKey = `/works/${workKey}`;
 
-    async function fetchBaseBook() {
-      if (location.state?.book) return location.state.book;
-      try {
-        const [workData, editionsData] = await Promise.all([
-          fetch(`https://openlibrary.org${fullWorkKey}.json`).then((r) =>
-            r.ok ? r.json() : null,
-          ),
-          fetch(
-            `https://openlibrary.org${fullWorkKey}/editions.json?limit=1`,
-          ).then((r) => (r.ok ? r.json() : null)),
-        ]);
-        if (!workData) return null;
-
-        let authorName = "Unknown";
-        const authorKey = workData.authors?.[0]?.author?.key;
-        if (authorKey) {
-          const authorData = await fetch(
-            `https://openlibrary.org${authorKey}.json`,
-          ).then((r) => (r.ok ? r.json() : null));
-          if (authorData?.name) authorName = authorData.name;
-        }
-
-        const firstEdition = editionsData?.entries?.[0];
-        const coverId = workData.covers?.[0];
-
-        return {
-          id: fullWorkKey,
-          title: workData.title,
-          author: authorName,
-          year: firstEdition?.publish_date || null,
-          cover: coverId
-            ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`
-            : null,
-          edition_count: editionsData?.size ?? null,
-          raw: {
-            key: fullWorkKey,
-            publisher: firstEdition?.publishers || [],
-            language:
-              firstEdition?.languages?.map((l) =>
-                l.key?.replace("/languages/", ""),
-              ) || [],
-            isbn: firstEdition?.isbn_13 || firstEdition?.isbn_10 || [],
-          },
-        };
-      } catch {
-        return null;
-      }
-    }
-
-    async function fetchDetails(workKeyPath) {
-      const workUrl = `https://openlibrary.org${workKeyPath}.json`;
-      const ratingsUrl = `https://openlibrary.org${workKeyPath}/ratings.json`;
-
-      const [workRes, ratingsRes] = await Promise.allSettled([
-        fetch(workUrl).then((r) =>
-          r.ok ? r.json() : Promise.reject("work fetch failed"),
-        ),
-        fetch(ratingsUrl).then((r) =>
-          r.ok ? r.json() : Promise.reject("ratings fetch failed"),
-        ),
-      ]);
-
-      if (cancelled) return;
-
-      if (workRes.status === "fulfilled") {
-        const data = workRes.value;
-        let desc = null;
-        if (data.description)
-          desc =
-            typeof data.description === "string"
-              ? data.description
-              : data.description.value;
-        else if (data.excerpts && data.excerpts.length > 0)
-          desc = data.excerpts[0].excerpt || data.excerpts[0].comment || null;
-        setSynopsis(desc);
-      } else {
-        setSynopsis(null);
-      }
-
-      if (ratingsRes.status === "fulfilled") {
-        const r = ratingsRes.value;
-        if (r && typeof r === "object") {
-          setAvgRating(
-            r.summary && typeof r.summary.average === "number"
-              ? r.summary.average
-              : null,
-          );
-          setRatingCount(
-            r.summary && typeof r.summary.count === "number"
-              ? r.summary.count
-              : 0,
-          );
-        }
-      }
-    }
-
-    setLoading(true);
-    setNotFound(false);
-    setSynopsis(null);
-    setAvgRating(null);
-    setRatingCount(0);
     (async () => {
-      const baseBook = await fetchBaseBook();
+      setLoading(true);
+      setNotFound(false);
+      setSynopsis(null);
+      setAvgRating(null);
+      setRatingCount(0);
+
+      const cameFromSearch = Boolean(location.state?.book);
+
+      // ---- Case 1: we already have title/author/cover from the search
+      // results page. We only need editions info (publisher/language),
+      // synopsis, and ratings — none of which depend on each other, so
+      // fetch all three at the same time. ----
+      if (cameFromSearch) {
+        const stateBook = location.state.book;
+        const workKeyPath = stateBook.raw?.key || fullWorkKey;
+        setBook(stateBook);
+
+        const [editionInfo, workData, ratings] = await Promise.all([
+          fetchEditionInfo(workKeyPath),
+          fetchWorkData(workKeyPath),
+          fetchRatings(workKeyPath),
+        ]);
+        if (cancelled) return;
+
+        setBook((prev) => ({
+          ...prev,
+          year: prev.year || editionInfo.year,
+          edition_count: prev.edition_count ?? editionInfo.edition_count,
+          raw: {
+            ...prev.raw,
+            publisher: editionInfo.publisher.length
+              ? editionInfo.publisher
+              : prev.raw?.publisher || [],
+            language: editionInfo.language.length
+              ? editionInfo.language
+              : prev.raw?.language || [],
+          },
+        }));
+        setSynopsis(extractSynopsis(workData));
+        setAvgRating(ratings.avgRating);
+        setRatingCount(ratings.ratingCount);
+        setLoading(false);
+        return;
+      }
+
+      // ---- Case 2: direct URL visit, no book data at all yet.
+      // work, editions, and ratings don't depend on each other either —
+      // fetch all three at once. Author name depends on the author key
+      // inside workData, so that one has to wait. ----
+      const [workData, editionInfo, ratings] = await Promise.all([
+        fetchWorkData(fullWorkKey),
+        fetchEditionInfo(fullWorkKey),
+        fetchRatings(fullWorkKey),
+      ]);
       if (cancelled) return;
-      if (!baseBook) {
+
+      if (!workData) {
         setNotFound(true);
         setLoading(false);
         return;
       }
-      setBook(baseBook);
-      await fetchDetails(baseBook.raw?.key || fullWorkKey);
-      if (!cancelled) setLoading(false);
+
+      const authorKey = workData.authors?.[0]?.author?.key;
+      const authorName = authorKey
+        ? await fetchAuthorName(authorKey)
+        : "Unknown";
+      if (cancelled) return;
+
+      const coverId = workData.covers?.[0];
+      const newBook = {
+        id: fullWorkKey,
+        title: workData.title,
+        author: authorName,
+        year: editionInfo.year,
+        cover: coverId
+          ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`
+          : null,
+        edition_count: editionInfo.edition_count,
+        raw: {
+          key: fullWorkKey,
+          publisher: editionInfo.publisher,
+          language: editionInfo.language,
+        },
+      };
+
+      setBook(newBook);
+      setSynopsis(extractSynopsis(workData));
+      setAvgRating(ratings.avgRating);
+      setRatingCount(ratings.ratingCount);
+      setLoading(false);
     })();
 
     return () => {
@@ -152,7 +138,6 @@ export default function BookDetails() {
 
   const firstPublisher = book?.raw?.publisher?.[0] || "N/A";
   const firstLanguage = book?.raw?.language?.[0] || "N/A";
-  const firstISBN = book?.raw?.isbn?.[0] || "N/A";
 
   useEffect(() => {
     setInUmbrella(book ? isInMyUmbrella(book.id) : false);
@@ -247,7 +232,7 @@ export default function BookDetails() {
               {synopsis || "Synopsis not available."}
             </div>
 
-            <div className="mt-6 border p-4 w-full max-w-md">
+            <div className="mt-6 border p-4 w-full">
               <div className="text-sm">
                 Number of Editions:{" "}
                 <span className="font-medium">
@@ -259,9 +244,6 @@ export default function BookDetails() {
               </div>
               <div className="text-sm">
                 Language: <span className="font-medium">{firstLanguage}</span>
-              </div>
-              <div className="text-sm">
-                ISBN: <span className="font-medium">{firstISBN}</span>
               </div>
             </div>
           </div>
@@ -300,11 +282,10 @@ function BookDetailsSkeleton() {
           <div className="h-4 w-3/4 bg-gray-200" />
         </div>
 
-        <div className="border p-4 w-full max-w-md space-y-2">
+        <div className="border p-4 w-full space-y-2">
           <div className="h-4 w-1/2 bg-gray-200" />
           <div className="h-4 w-1/3 bg-gray-200" />
           <div className="h-4 w-1/4 bg-gray-200" />
-          <div className="h-4 w-2/5 bg-gray-200" />
         </div>
       </div>
     </div>
