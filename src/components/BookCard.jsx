@@ -11,10 +11,11 @@ export default function BookCard({
   onSelect,
 }) {
   const [loaded, setLoaded] = useState(false);
+  const coverWidth = "w-[110px] md:w-[170px]";
 
   return (
     <div
-      className="w-full max-w-[220px] cursor-pointer"
+      className="flex flex-col items-center cursor-pointer"
       onClick={onSelect}
       role="button"
       tabIndex={0}
@@ -22,7 +23,9 @@ export default function BookCard({
         if (e.key === "Enter") onSelect && onSelect();
       }}
     >
-      <div className="w-[90px] h-[135px] sm:w-[110px] sm:h-[165px] md:w-[180px] md:h-[250px] border border-black shadow-[3px_4px_6px_0_rgba(0,0,0,0.25)] overflow-hidden mb-4 relative">
+      <div
+        className={`${coverWidth} h-[165px] md:h-[240px] border border-black shadow-[3px_4px_6px_0_rgba(0,0,0,0.25)] overflow-hidden mb-4 relative`}
+      >
         {isMyUmbrella && (
           <img
             src={umbrella_shape}
@@ -54,9 +57,12 @@ export default function BookCard({
           <PlaceholderCover title={title} author={author} year={year} />
         )}
       </div>
-      <div className="text-lg font-semibold">{title}</div>
-      <div className="text-sm text-gray-500">{year}</div>
-      <div className="italic text-sm">{author}</div>
+
+      <div className={`${coverWidth}`}>
+        <div className="text-lg font-semibold">{title}</div>
+        <div className="text-sm text-gray-500">{year}</div>
+        <div className="italic text-sm break-words">{author}</div>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
-import BookCard from "../components/BookCard";
+import BookGrid from "../components/BookGrid";
 import umbrella from "/favicon.svg";
 import empty from "../assets/no_books.svg";
 
@@ -127,23 +127,7 @@ export default function Results() {
           {!loading && books.length > 0 && (
             <>
               <div className="text-2xl mb-6">Showing results for “{q}”</div>
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-x-2 gap-y-4 items-start place-items-center">
-                {books.map((b) => (
-                  <BookCard
-                    key={b.id}
-                    {...b}
-                    isMyUmbrella={false}
-                    onSelect={() =>
-                      navigate(
-                        `/book/${encodeURIComponent(b.id.replace("/works/", ""))}`,
-                        {
-                          state: { book: b },
-                        },
-                      )
-                    }
-                  />
-                ))}
-              </div>
+              <BookGrid books={books} isMyUmbrella={false} />
 
               <div className="flex items-center justify-center gap-4 mt-8">
                 <button
