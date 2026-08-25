@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import BookGrid from "../components/BookGrid";
 import { getMyUmbrella, removeFromMyUmbrella } from "../utils/myUmbrella";
 import my_umbrella from "../assets/my_umbrella.svg";
@@ -7,7 +7,6 @@ import empty from "../assets/no_books.svg";
 
 export default function MyUmbrella() {
   const [books, setBooks] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     setBooks(getMyUmbrella());
@@ -28,8 +27,10 @@ export default function MyUmbrella() {
 
       <div className="w-full border border-black p-5">
         <div className="flex justify-end mb-5">
-          <button className="button-black" onClick={() => navigate("/results")}>
-            + Add a book
+          <button className="button-black">
+            <Link to="/results" className="button-black">
+              + Add a book
+            </Link>
           </button>
         </div>
 

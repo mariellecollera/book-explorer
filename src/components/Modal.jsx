@@ -1,7 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Modal({ isOpen, onClose, title, message }) {
-  const navigate = useNavigate();
   if (!isOpen) return null;
 
   return (
@@ -16,12 +15,10 @@ export default function Modal({ isOpen, onClose, title, message }) {
         {title && <h3 className="text-xl font-bold mb-2">{title}</h3>}
         <p className="italic text-md mb-6">{message}</p>
         <div className="flex justify-between">
-          <button
-            type="button"
-            onClick={() => navigate("/my-umbrella")}
-            className="button-white"
-          >
-            View My Umbrella
+          <button type="button" className="button-white">
+            <Link to="/my-umbrella" className="button-white">
+              View My Umbrella
+            </Link>
           </button>
           <button type="button" onClick={onClose} className="button-black">
             Close
