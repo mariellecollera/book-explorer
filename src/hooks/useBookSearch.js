@@ -43,7 +43,7 @@ export function useBookSearch(query, page = 1, perPage = 40) {
       signal: controller.signal,
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Network response was not ok");
+        if (!res.ok) throw new Error("Failed to load books.");
         return res.json();
       })
       .then((json) => {
