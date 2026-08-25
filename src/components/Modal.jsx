@@ -13,7 +13,7 @@ export default function Modal({ isOpen, onClose, title, message }) {
         onClick={(e) => e.stopPropagation()}
       >
         {title && <h3 className="text-xl font-bold mb-2">{title}</h3>}
-        <p className="italic text-md mb-6">{message}</p>
+        <p className="text-md mb-6">{message}</p>
         <div className="flex justify-between">
           <button type="button" className="button-dashed">
             <Link to="/my-umbrella">View My Umbrella</Link>
