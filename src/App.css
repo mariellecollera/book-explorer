@@ -29,6 +29,18 @@
   cursor: default;
 }
 
+.button-dashed {
+  border-bottom: 1px dashed var(--color-black);
+  padding: 8px;
+  opacity: 1;
+  cursor: pointer;
+  font-style: italic;
+}
+
+.button-dashed:hover {
+  opacity: 0.75;
+}
+
 .box-decor {
   width: 5px;
   height: 5px;

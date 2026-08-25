@@ -58,7 +58,7 @@ export default function BookDetails() {
 
   return (
     <div className="mx-auto px-5 py-8 max-w-5xl">
-      <button onClick={() => navigate(-1)} className="button-black mb-6">
+      <button onClick={() => navigate(-1)} className="button-dashed mb-6">
         ← Back
       </button>
 
