@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+import Loading from "./LoadingState";
 import PlaceholderCover from "../components/PlaceholderCover";
 import Modal from "../components/Modal";
 import {
@@ -8,6 +9,7 @@ import {
   removeFromMyUmbrella,
 } from "../utils/myUmbrella";
 import { useBookDetails } from "../hooks/useBookDetails";
+import umbrella from "/favicon.svg";
 
 export default function BookDetails() {
   const { workKey } = useParams();
@@ -61,7 +63,7 @@ export default function BookDetails() {
       </button>
 
       {loading ? (
-        <BookDetailsSkeleton />
+        <Loading />
       ) : (
         <div className="flex gap-8">
           <div className="flex-shrink-0">

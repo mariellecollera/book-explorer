@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import LoadingState from "./LoadingState";
+import EmptyState from "./EmptyState";
+import ErrorState from "./ErrorState";
 import SearchBar from "../components/SearchBar";
 import BookGrid from "../components/BookGrid";
 import { useBookSearch } from "../hooks/useBookSearch";
-import umbrella from "/favicon.svg";
-import empty from "../assets/no_books.svg";
 
 export default function Results() {
   const [searchParams] = useSearchParams();
@@ -43,30 +44,11 @@ export default function Results() {
         <SearchBar query={query} setQuery={setQuery} onSearch={onSearch} />
 
         <div className="mt-6">
-          {loading && (
-            <div className="py-20 flex items-center justify-center">
-              <img
-                src={umbrella}
-                alt="loading"
-                className="w-30 h-30 animate-pulse"
-              />
-            </div>
-          )}
+          {loading && <LoadingState />}
 
-          {error && (
-            <div className="py-8 text-center text-red-600">{error}</div>
-          )}
+          {error && <ErrorState error={error} />}
 
-          {!loading && !error && books.length === 0 && q && (
-            <div className="py-8 flex flex-col items-center justify-center italic text-[18px]">
-              <img
-                src={empty}
-                alt="No books found"
-                className="w-30 h-30 mb-2"
-              />
-              No books found.
-            </div>
-          )}
+          {!loading && !error && books.length === 0 && q && <EmptyState />}
 
           {!loading && books.length > 0 && (
             <>
