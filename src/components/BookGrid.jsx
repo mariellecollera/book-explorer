@@ -1,7 +1,8 @@
 import BookCard from "./BookCard";
 import { useNavigate } from "react-router-dom";
+import { isInMyUmbrella } from "../utils/myUmbrella";
 
-export default function BookGrid({ books, isMyUmbrella }) {
+export default function BookGrid({ books }) {
   const navigate = useNavigate();
 
   return (
@@ -10,7 +11,7 @@ export default function BookGrid({ books, isMyUmbrella }) {
         <BookCard
           key={b.id}
           {...b}
-          isMyUmbrella={isMyUmbrella}
+          isMyUmbrella={isInMyUmbrella(b.id)}
           onSelect={() =>
             navigate(
               `/book/${encodeURIComponent(b.id.replace("/works/", ""))}`,

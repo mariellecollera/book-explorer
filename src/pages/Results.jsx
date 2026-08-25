@@ -53,7 +53,7 @@ export default function Results() {
           {!loading && books.length > 0 && (
             <>
               <div className="text-2xl mb-6">Showing results for “{q}”</div>
-              <BookGrid books={books} isMyUmbrella={false} />
+              <BookGrid books={books} />
 
               <div className="flex items-center justify-center gap-4 mt-8">
                 <button

@@ -40,7 +40,7 @@ export default function MyUmbrella() {
             Your Umbrella is empty.
           </div>
         ) : (
-          <BookGrid books={books} isMyUmbrella={true} />
+          <BookGrid books={books} />
         )}
       </div>
     </main>
