@@ -86,10 +86,6 @@ export function useBookDetails(workKey, initialBook = null) {
             firstEdition?.publishers?.[0] ||
             initialBook?.raw?.publisher?.[0] ||
             "N/A",
-          language:
-            firstEdition?.languages?.[0]?.key?.replace("/languages/", "") ||
-            initialBook?.raw?.language?.[0] ||
-            "N/A",
           synopsis: extractSynopsis(workData),
           avgRating:
             typeof ratingsData?.summary?.average === "number"
