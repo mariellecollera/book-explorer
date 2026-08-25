@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import Loading from "./LoadingState";
 import PlaceholderCover from "../components/PlaceholderCover";
+import TitleCard from "../components/TitleCard";
+import DetailsCard from "../components/DetailsCard";
 import Modal from "../components/Modal";
 import {
   addToMyUmbrella,
@@ -9,7 +11,6 @@ import {
   removeFromMyUmbrella,
 } from "../utils/myUmbrella";
 import { useBookDetails } from "../hooks/useBookDetails";
-import umbrella from "/favicon.svg";
 
 export default function BookDetails() {
   const { workKey } = useParams();
@@ -53,9 +54,6 @@ export default function BookDetails() {
     );
   }
 
-  const filledStars = book?.avgRating ? Math.round(book.avgRating) : 0;
-  const maxStars = 5;
-
   return (
     <div className="mx-auto px-5 py-8 max-w-5xl">
       <button onClick={() => navigate(-1)} className="button-dashed mb-6">
@@ -65,8 +63,18 @@ export default function BookDetails() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="flex gap-8">
-          <div className="flex-shrink-0">
+        <div className="flex flex-col items-center sm:flex-row sm:items-start gap-8">
+          <div className="sm:hidden">
+            <TitleCard
+              title={book?.title}
+              year={book?.year}
+              author={book?.author}
+              avgRating={book?.avgRating}
+              ratingCount={book?.ratingCount}
+            />
+          </div>
+
+          <div className=" flex-shrink-0">
             <div className="flex flex-col items-center justify-center w-56">
               <div className="w-full h-[320px] border mb-2">
                 {book?.cover ? (
@@ -97,45 +105,29 @@ export default function BookDetails() {
           </div>
 
           <div className="flex-1">
-            <div>
-              <h3 className="text-2xl font-serif mr-4 inline">{book?.title}</h3>
-              <span className="text-gray-500 ml-2">{book?.year || ""}</span>
-              <div className="italic text-gray-700 mt-1">{book?.author}</div>
-
-              <div className="mt-3 flex items-center gap-3">
-                <div className="flex items-center text-yellow-500">
-                  {Array.from({ length: maxStars }).map((_, i) => (
-                    <span key={i} className="text-xl">
-                      {i < filledStars ? "★" : "☆"}
-                    </span>
-                  ))}
-                </div>
-                <div className="text-sm text-gray-600">
-                  {book?.avgRating ? book.avgRating.toFixed(1) : "—"} (
-                  {book?.ratingCount || 0})
-                </div>
-              </div>
+            <div className="hidden sm:block">
+              <TitleCard
+                title={book?.title}
+                year={book?.year}
+                author={book?.author}
+                avgRating={book?.avgRating}
+                ratingCount={book?.ratingCount}
+              />
             </div>
 
             <div className="mt-6 text-base leading-relaxed text-gray-800">
               {book?.synopsis || "Synopsis not available."}
             </div>
 
-            <div className="mt-6 border p-4 w-full">
-              <div className="text-sm">
-                Number of Editions:{" "}
-                <span className="font-medium">
-                  {book?.edition_count ?? "N/A"}
-                </span>
-              </div>
-              <div className="text-sm">
-                Publisher:{" "}
-                <span className="font-medium">{book?.publisher || "N/A"}</span>
-              </div>
-              <div className="text-sm">
-                Language:{" "}
-                <span className="font-medium">{book?.language || "N/A"}</span>
-              </div>
+            <div className="flex justify-center gap-2 mt-6">
+              <DetailsCard
+                book={book?.edition_count ?? "N/A"}
+                category="No. of Editions"
+              />
+              <DetailsCard
+                book={book?.publisher || "N/A"}
+                category="Publisher"
+              />
             </div>
           </div>
         </div>
