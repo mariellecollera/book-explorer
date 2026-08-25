@@ -1,87 +1,29 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import BookGrid from "../components/BookGrid";
+import { useBookSearch } from "../hooks/useBookSearch";
 import umbrella from "/favicon.svg";
 import empty from "../assets/no_books.svg";
-
-const resultsCache = new Map();
 
 export default function Results() {
   const [searchParams] = useSearchParams();
   const q = searchParams.get("q") || "";
-  const [query, setQuery] = useState(q);
   const page = parseInt(searchParams.get("page") || "1", 10) || 1;
-  const [totalResults, setTotalResults] = useState(0);
-  const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const perPage = 40;
 
+  const [query, setQuery] = useState(q);
+
   useEffect(() => {
     setQuery(q);
-    if (!q) return;
+  }, [q]);
 
-    const cacheKey = `${q.toLowerCase()}-${page}-${perPage}`;
-    const cached = resultsCache.get(cacheKey);
-
-    // Already fetched this exact search + page before — reuse it,
-    // no network call, no loading flicker.
-    if (cached) {
-      setBooks(cached.books);
-      setTotalResults(cached.totalResults);
-      setLoading(false);
-      setError(null);
-      return;
-    }
-
-    let cancelled = false;
-    setLoading(true);
-    setError(null);
-
-    const params = new URLSearchParams({
-      q,
-      page: String(page),
-      limit: String(perPage),
-    });
-
-    fetch(`https://openlibrary.org/search.json?${params.toString()}`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Network response was not ok");
-        return res.json();
-      })
-      .then((data) => {
-        const docs = data.docs || [];
-        const mapped = docs.map((d) => ({
-          id: d.key,
-          title: d.title,
-          author: (d.author_name && d.author_name[0]) || "Unknown",
-          year: d.first_publish_year,
-          cover: d.cover_i
-            ? `https://covers.openlibrary.org/b/id/${d.cover_i}-M.jpg`
-            : null,
-          subjects: d.subject || [],
-          edition_count: d.edition_count,
-          raw: d,
-        }));
-        const result = { books: mapped, totalResults: data.numFound || 0 };
-
-        resultsCache.set(cacheKey, result);
-        setBooks(result.books);
-        setTotalResults(result.totalResults);
-      })
-      .catch((err) => {
-        if (!cancelled) setError(err.message || "Failed to fetch");
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [q, page]);
+  const { books, totalResults, loading, error } = useBookSearch(
+    q,
+    page,
+    perPage,
+  );
 
   function onSearch() {
     if (!query || query.trim() === "") return;
@@ -110,10 +52,12 @@ export default function Results() {
               />
             </div>
           )}
+
           {error && (
             <div className="py-8 text-center text-red-600">{error}</div>
           )}
-          {!loading && !error && books.length === 0 && (
+
+          {!loading && !error && books.length === 0 && q && (
             <div className="py-8 flex flex-col items-center justify-center italic text-[18px]">
               <img
                 src={empty}
