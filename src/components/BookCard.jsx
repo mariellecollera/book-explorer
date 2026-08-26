@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PlaceholderCover from "./PlaceholderCover";
-import umbrella_shape from "../assets/umbrella_shape.svg";
+import UmbrellaTag from "./UmbrellaTag";
 
 export default function BookCard({
   cover,
@@ -15,7 +15,7 @@ export default function BookCard({
 
   return (
     <div
-      className="flex flex-col items-center cursor-pointer duration-300 ease-in-out transform hover:scale-105"
+      className="flex flex-col items-center cursor-pointer duration-300 ease-in-out transform hover:scale-105 relative"
       onClick={onSelect}
       role="button"
       tabIndex={0}
@@ -23,16 +23,10 @@ export default function BookCard({
         if (e.key === "Enter") onSelect && onSelect();
       }}
     >
+      <UmbrellaTag isMyUmbrella={isMyUmbrella} />
       <div
         className={`${coverWidth} h-[165px] md:h-[240px] border border-black shadow-[3px_4px_6px_0_rgba(0,0,0,0.25)] overflow-hidden mb-4 relative`}
       >
-        {isMyUmbrella && (
-          <img
-            src={umbrella_shape}
-            alt="umbrella shape"
-            className="absolute top-[-5px] right-[-5px] rotate-45 w-12 object-cover"
-          />
-        )}
         {cover ? (
           <>
             {!loaded && (
