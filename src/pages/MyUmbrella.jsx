@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BookGrid from "../components/BookGrid";
-import { getMyUmbrella, removeFromMyUmbrella } from "../utils/myUmbrella";
+import { getMyUmbrella } from "../utils/myUmbrella";
 import my_umbrella from "../assets/my_umbrella.svg";
 import empty from "../assets/no_books.svg";
 
@@ -11,10 +11,6 @@ export default function MyUmbrella() {
   useEffect(() => {
     setBooks(getMyUmbrella());
   }, []);
-
-  function handleRemove(id) {
-    setBooks(removeFromMyUmbrella(id));
-  }
 
   return (
     <main className="flex flex-col items-center max-w-[1200px] m-10 px-5 py-10">
