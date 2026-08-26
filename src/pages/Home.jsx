@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <>
-      <main className="flex flex-col items-center max-w-[1200px] m-10 px-5 py-10 gap-5">
+      <main className="flex flex-col items-center max-w-[1200px] mx-auto my-10 px-5 py-10 gap-5">
         <img
           src={umbrella}
           alt="The Umbrella Library Icon"

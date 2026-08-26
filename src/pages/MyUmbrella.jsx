@@ -13,7 +13,7 @@ export default function MyUmbrella() {
   }, []);
 
   return (
-    <main className="flex flex-col items-center max-w-[1200px] m-10 px-5 py-10">
+    <main className="flex flex-col items-center max-w-[1200px] mx-auto my-10 px-5 py-10">
       <div className="flex flex-col items-center mb-10 gap-5">
         <img src={my_umbrella} alt="My Umbrella" className="h-14 w-auto" />
         <p className="text-black italic text-[16px]">
