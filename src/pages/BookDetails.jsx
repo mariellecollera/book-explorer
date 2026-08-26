@@ -43,24 +43,15 @@ export default function BookDetails() {
     setModalOpen(true);
   }
 
-  if (notFound) {
-    return (
-      <div className="mx-auto px-5 py-8 max-w-5xl">
-        <button onClick={() => navigate(-1)} className="button-black mb-6">
-          ← Back
-        </button>
-        <div className="text-center italic py-20">Book not found.</div>
-      </div>
-    );
-  }
-
   return (
     <div className="mx-auto px-8 sm:px-5 py-8 max-w-5xl">
       <button onClick={() => navigate(-1)} className="button-dashed mb-6">
         ← Back
       </button>
 
-      {loading ? (
+      {notFound ? (
+        <div className="text-center italic py-20">Book not found.</div>
+      ) : loading ? (
         <Loading />
       ) : (
         <div className="flex flex-col items-center sm:flex-row sm:items-start gap-8">
@@ -116,7 +107,9 @@ export default function BookDetails() {
             </div>
 
             <div className="mt-6 text-base leading-relaxed text-gray-800">
-              {book?.synopsis || "Synopsis not available."}
+              {book?.synopsis || (
+                <span className="italic">Synopsis not available.</span>
+              )}
             </div>
 
             <div className="flex justify-center sm:justify-start gap-2 mt-6">
