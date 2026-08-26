@@ -121,11 +121,11 @@ export default function BookDetails() {
 
             <div className="flex justify-center gap-2 mt-6">
               <DetailsCard
-                book={book?.edition_count ?? "N/A"}
+                value={book?.edition_count ?? "N/A"}
                 category="No. of Editions"
               />
               <DetailsCard
-                book={book?.publisher || "N/A"}
+                value={book?.publisher || "N/A"}
                 category="Publisher"
               />
             </div>
