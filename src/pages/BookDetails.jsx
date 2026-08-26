@@ -142,35 +142,3 @@ export default function BookDetails() {
     </div>
   );
 }
-
-function BookDetailsSkeleton() {
-  return (
-    <div className="flex gap-8 animate-pulse">
-      <div className="flex-shrink-0">
-        <div className="flex flex-col items-center justify-center w-56">
-          <div className="w-full h-[320px] bg-gray-200 border mb-2" />
-          <div className="h-9 w-full bg-gray-200" />
-        </div>
-      </div>
-
-      <div className="flex-1">
-        <div className="h-7 w-2/3 bg-gray-200 mb-3" />
-        <div className="h-4 w-1/3 bg-gray-200 mb-4" />
-        <div className="h-5 w-40 bg-gray-200 mb-6" />
-
-        <div className="space-y-2 mb-6">
-          <div className="h-4 w-full bg-gray-200" />
-          <div className="h-4 w-full bg-gray-200" />
-          <div className="h-4 w-5/6 bg-gray-200" />
-          <div className="h-4 w-3/4 bg-gray-200" />
-        </div>
-
-        <div className="border p-4 w-full space-y-2">
-          <div className="h-4 w-1/2 bg-gray-200" />
-          <div className="h-4 w-1/3 bg-gray-200" />
-          <div className="h-4 w-1/4 bg-gray-200" />
-        </div>
-      </div>
-    </div>
-  );
-}
