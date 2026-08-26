@@ -64,7 +64,7 @@ export default function BookDetails() {
         <Loading />
       ) : (
         <div className="flex flex-col items-center sm:flex-row sm:items-start gap-8">
-          <div className="sm:hidden">
+          <div className="self-start sm:hidden">
             <TitleCard
               title={book?.title}
               year={book?.year}
@@ -119,7 +119,7 @@ export default function BookDetails() {
               {book?.synopsis || "Synopsis not available."}
             </div>
 
-            <div className="flex justify-center gap-2 mt-6">
+            <div className="flex justify-center sm:justify-start gap-2 mt-6">
               <DetailsCard
                 value={book?.edition_count ?? "N/A"}
                 category="No. of Editions"
