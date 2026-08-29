@@ -23,19 +23,14 @@ export default function Header() {
         </a>
 
         <nav className="hidden md:flex items-center gap-[45px]">
+          <Link to="/" className="italic text-[18px] hover:opacity-80">
+            Home
+          </Link>
           <Link
             to="/my-umbrella"
             className="italic text-[18px] hover:opacity-80"
           >
             My Umbrella
-          </Link>
-
-          <Link to="#" className="italic text-[18px] hover:opacity-80">
-            Log in
-          </Link>
-
-          <Link to="#" className="button-white italic text-[18px]">
-            Sign up
           </Link>
         </nav>
 
